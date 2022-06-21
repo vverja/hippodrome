@@ -1,0 +1,34 @@
+Configuration:
+  status: info
+  name: hippodrome
+
+  Properties:
+    property:
+      - name: "hippodrome.log.dir"
+        value: "logs"
+  Appenders:
+    RollingFile:
+      name: LogToRolling
+      charset: windows-1251
+      fileName: ${hippodrome.log.dir}/hippodrome.log
+      filePattern: ${hippodrome.log.dir}/hippodrome.%d{yyyy-MM-dd}.log
+      PatternLayout:
+        Pattern: "%d{yyyy-MM-dd HH:mm:ss,SSS} %level %c{1}: %msg%n"
+      Policies:
+        TimeBasedTriggeringPolicy:
+          interval: 1
+          modulate: true
+      DefaultRolloverStrategy:
+        delete:
+          basePath: ${hippodrome.log.dir}
+          IfFileName:
+            glob: "*/${hippodrome.log.dir}/hippodrome*.log"
+          IfLastModified:
+            age: 7d
+  Loggers:
+    Root:
+      Level: debug
+      AppenderRef:
+        - ref: LogToRolling
+
+
