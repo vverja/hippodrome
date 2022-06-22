@@ -67,15 +67,25 @@ class HorseTest {
 
     @Test
     void moveTest() {
-        double param1 = 0.2, param2 = 0.9, distance = 1.0;
+        double min = 0.2, max = 0.9, distance = 1.0;
         int speed = 1;
         horse = new Horse("SomeName", speed, distance);
         try(MockedStatic<Horse> mockedHorse = mockStatic(Horse.class)) {
-            mockedHorse.when(()->Horse.getRandomDouble(param1, param2)).thenReturn(0.5);
             horse.move();
-            Double expectedDistance = distance + speed*0.5;
-            assertEquals(expectedDistance, horse.getDistance());
-            mockedHorse.verify(()->Horse.getRandomDouble(param1, param2), times(1));
+            mockedHorse.verify(()->Horse.getRandomDouble(min, max), times(1));
         }
+    }
+    @ParameterizedTest
+    @ValueSource(doubles = {0.5, 0.6, 0.7, 0.8})
+    void getRandomDoubleTest(double randomResult){
+        double min = 0.2, max = 0.9, distance = 1.0, speed = 31;
+        horse = new Horse("SomeName", speed, distance);
+        try(MockedStatic<Horse> mockedHorse = mockStatic(Horse.class)) {
+            mockedHorse.when(()->Horse.getRandomDouble(min, max)).thenReturn(randomResult);
+            horse.move();
+            Double expectedDistance = distance + speed*randomResult;
+            assertEquals(expectedDistance, horse.getDistance());
+        }
+
     }
 }

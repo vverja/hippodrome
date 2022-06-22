@@ -10,17 +10,20 @@ import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(MockitoExtension.class)
 class HippodromeTest {
     @Test
-    void hippodromeConstructorTest(){
+    void hippodromeConstructorNullTest(){
         String expected = "Horses cannot be null.";
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> new Hippodrome(null));
         assertEquals(expected, exception.getMessage());
-        expected = "Horses cannot be empty.";
-        exception = assertThrows(IllegalArgumentException.class, () -> new Hippodrome(new ArrayList<>()));
+    }
+    @Test
+    void hippodromeConstructorEmptyTest() {
+        String expected = "Horses cannot be empty.";
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> new Hippodrome(new ArrayList<>()));
         assertEquals(expected, exception.getMessage());
     }
 
     @Test
-    void getHorses() {
+    void getHorsesTest() {
         int countOfHorses = 30;
         List<Horse> myHorsesList = generateListOfHorses(countOfHorses);
         Hippodrome hippodrome = new Hippodrome(myHorsesList);
@@ -28,12 +31,11 @@ class HippodromeTest {
         for (int i = 0; i < myHorsesList.size(); i++) {
             assertEquals(myHorsesList.get(i), hippodromeHorses.get(i));
         }
-        //assertSame(myHorsesList, hippodrome.getHorses());
     }
 
 
     @Test
-    void move() {
+    void moveInvokeTest() {
         int countOfHorses = 50;
         List<Horse> myHorsesList = generateListOfHorses(countOfHorses);
         Hippodrome hippodrome = new Hippodrome(myHorsesList);
@@ -42,7 +44,7 @@ class HippodromeTest {
     }
 
     @Test
-    void getWinner() {
+    void getWinnerDistanceTest() {
         int countOfHorses = 20;
         List<Horse> myHorsesList = generateListOfHorses(countOfHorses);
         Hippodrome hippodrome = new Hippodrome(myHorsesList);

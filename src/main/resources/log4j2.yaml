@@ -9,7 +9,6 @@ Configuration:
   Appenders:
     RollingFile:
       name: LogToRolling
-      charset: windows-1251
       fileName: ${hippodrome.log.dir}/hippodrome.log
       filePattern: ${hippodrome.log.dir}/hippodrome.%d{yyyy-MM-dd}.log
       PatternLayout:
