@@ -17,29 +17,58 @@ class HorseTest {
     private Horse horse;
 
     @Test
-    public void horseConstructorNullNameTest(){
+    void horseConstructorNullNameExceptionTest(){
+        assertThrows(IllegalArgumentException.class, () -> new Horse(null, 1, 1));
+    }
+    @Test
+    void horseConstructorNullNameExceptionMessageTest(){
         String expectedMessage = "Name cannot be null.";
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> new Horse(null, 1, 1));
-        assertEquals(expectedMessage, exception.getMessage());
+        try {
+            new Horse(null, 1, 1);
+        }catch (IllegalArgumentException exception){
+            assertEquals(expectedMessage, exception.getMessage());
+        }
     }
     @ParameterizedTest
     @ValueSource(strings = {"", "\t", " ", "        "})
-    public void horseConstructorEmptyNameTest(String name){
+    void horseConstructorEmptyNameExceptionTest(String name){
+        assertThrows(IllegalArgumentException.class, () -> new Horse(name, 1, 1));
+    }
+    @Test
+    void horseConstructorEmptyNameExceptionMessageTest(){
         String expectedMessage = "Name cannot be blank.";
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> new Horse(name, 1, 1));
-        assertEquals(expectedMessage, exception.getMessage());
+        try{
+            new Horse(" ", 1, 1);
+        }catch (IllegalArgumentException exception) {
+            assertEquals(expectedMessage, exception.getMessage());
+        }
     }
     @Test
-    public void horseConstructorSpeedTest(){
+    void horseConstructorSpeedExceptionTest(){
+        assertThrows(IllegalArgumentException.class, () -> new Horse("SomeName", -1, 1));
+    }
+    @Test
+    void horseConstructorSpeedExceptionMessageTest(){
         String expectedMessage = "Speed cannot be negative.";
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> new Horse("SomeName", -1, 1));
-        assertEquals(expectedMessage, exception.getMessage());
+        try {
+           new Horse("SomeName", -1, 1);
+        }catch (IllegalArgumentException exception) {
+            assertEquals(expectedMessage, exception.getMessage());
+        }
+    }
+
+    @Test
+    void horseConstructorDistanceExceptionTest(){
+        assertThrows(IllegalArgumentException.class, () -> new Horse("SomeName", 1, -1));
     }
     @Test
-    public void horseConstructorDistanceTest(){
+    void horseConstructorDistanceExceptionMessageTest(){
         String expectedMessage = "Distance cannot be negative.";
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> new Horse("SomeName", 1, -1));
-        assertEquals(expectedMessage, exception.getMessage());
+        try {
+            new Horse("SomeName", 1, -1);
+        }catch (IllegalArgumentException exception) {
+            assertEquals(expectedMessage, exception.getMessage());
+        }
     }
 
     @Test
